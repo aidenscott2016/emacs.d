@@ -10,7 +10,8 @@
   (defvar aiden/indent-width 2)
   :config
   (setq ring-bell-function 'ignore
-        default-directory "~/")
+        default-directory "~/"
+	)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (scroll-bar-mode -1)
@@ -30,7 +31,7 @@
     (save-buffer)
     (kill-this-buffer))
   :config
-    (with-eval-after-load 'evil-maps ; avoid conflict with company tooltip selection
+  (with-eval-after-load 'evil-maps ; avoid conflict with company tooltip selection
     (define-key evil-insert-state-map (kbd "C-n") nil)
     (define-key evil-insert-state-map (kbd "C-p") nil))
   (evil-ex-define-cmd "q" #'kill-this-buffer)
@@ -72,10 +73,10 @@
   :ensure t
   :bind ("C-h m" . which-key-show-major-mode)
   :config
-   (setq which-key-allow-evil-operators "true")
-   (which-key-setup-side-window-right-bottom)
-   (which-key-mode)
-)
+  (setq which-key-allow-evil-operators "true")
+  (which-key-setup-side-window-right-bottom)
+  (which-key-mode)
+  )
 
 
 
@@ -88,4 +89,10 @@
   (global-undo-tree-mode 1))
 
 
+
+
+
+(use-package display-line-numbers
+  :config
+  (global-display-line-numbers-mode))
 
