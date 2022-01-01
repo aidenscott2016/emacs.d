@@ -1,0 +1,35 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/" . "aiden/")
+ ("/home/aiden/" . "src/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ 
+)
+
+;; ----- ido-work-file-list -----
+(
+ 
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/aiden/src/" (25039 38959 480359 983000) "x220/" "yay-bin/" "st/" "nextcloud/" "../" "data-mocks/" "dotfiles/" "./" "dwmblocks/" "dwm/" "wm-scripts/" "terraform-nextcloud-ec2-rds-s3/" "dmenu-hueadm/")
+
+ ("/home/" (24894 25102 869389 790000) "lost+found/" "aiden/" "../" "./")
+
+ ("/home/aiden/Mail/" (24900 64223 475913 573000) "../" "./")
+
+ ("/home/aiden/" (25039 49102 214119 615000) ".Xauthority" ".screenlayout/" ".vscode/" "Mail/" ".yarn/" ".aws/" ".cache/" ".profile.old" ".dbus/" ".bash_history" ".minecraft/" ".node_repl_history" ".vimrc" ".config/" "screenshots/" "notes/" ".ssh/" "../" "pass/" ".bashrc" "package-lock.json" ".pki/" ".yarnrc" ".tmux.conf" "downloads/" ".npm/" ".emacs.d/" ".gitconfig" "./" "node_modules/" "yay/" ".xinitrc" ".scala_history_jline3" ".password-store/" ".mozilla/" "Downloads/" ".lesshst" ".viminfo" ".gnupg/" "crap/" ".vim/" ".profile" ".python_history" "src/" ".terraform.d/" ".nvm/" ".local/")
+
+ ("/home/aiden/.emacs.d/auto-save-list/" (25039 50245 227501 917000) ".saves-30543-liquid~" ".saves-25267-liquid~" "../" ".saves-20271-liquid~" "./" ".saves-1443-liquid~" ".saves-12482-liquid~" ".saves-24781-liquid~")
+
+ ("/home/aiden/.emacs.d/" (25039 50307 640837 925000) "#init.el#" ".gitignore" "auto-save-list/" "../" "init.el~" ".#init.el" "url/" "init.el" "./" "projectile-bookmarks.eld" ".git/" "elpa/")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t
