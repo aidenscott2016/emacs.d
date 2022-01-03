@@ -51,3 +51,4 @@ ido.last
 /.cache/
 /transient/
 projectile*
+/url/

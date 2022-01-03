@@ -10,6 +10,12 @@
 (use-package emacs
   :preface
   (defvar aiden/indent-width 2)
+  (defun aiden/init-el ()
+    (interactive)
+    (find-file "~/.emacs.d/init.el")
+    )
+
+  :bind ("C-c i" . 'aiden/init-el )
   :config
   (setq ring-bell-function 'ignore
         default-directory "~/"
@@ -56,7 +62,7 @@
   :config
   (setq which-key-allow-evil-operators "true")
   (which-key-setup-side-window-right-bottom)
-  (which-key-mode)
+  (which-key-mode +1)
   )
 
 
@@ -172,4 +178,5 @@
   )
 
 
-(use-package magit)
+(use-package magit
+  :bind ("C-c m" . magit))
