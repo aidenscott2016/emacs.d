@@ -22,6 +22,7 @@
 	)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
+  (show-paren-mode 1)
   (scroll-bar-mode -1)
   (load-theme 'wombat)
   )
@@ -54,7 +55,8 @@
     (define-key evil-insert-state-map (kbd "C-n") nil)
     (define-key evil-insert-state-map (kbd "C-p") nil))
   (evil-ex-define-cmd "q" #'kill-this-buffer)
-  (evil-ex-define-cmd "wq" #'ian/save-and-kill-this-buffer))
+  ;(evil-ex-define-cmd "wq" #'ian/save-and-kill-this-buffer))
+  )
 
 (use-package which-key
   :ensure t
@@ -132,7 +134,7 @@
     (pcase (cons (not (null (executable-find "git")))
                  (not (null treemacs-python-executable)))
       (`(t . t)
-       (treemacs-git-mode 'deferred))
+      (treemacs-git-mode 'deferred))
       (`(t . _)
        (treemacs-git-mode 'simple)))
 
