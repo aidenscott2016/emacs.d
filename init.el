@@ -59,10 +59,10 @@
 (use-package which-key
   :ensure t
   :bind ("C-h m" . which-key-show-major-mode)
+  :hook (after-init . which-key-mode)
   :config
   (setq which-key-allow-evil-operators "true")
   (which-key-setup-side-window-right-bottom)
-  (which-key-mode +1)
   )
 
 
