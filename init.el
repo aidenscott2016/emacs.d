@@ -19,6 +19,7 @@
   :config
   (setq ring-bell-function 'ignore
         default-directory "~/"
+	help-window-select t
 	)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
@@ -49,7 +50,8 @@
     (save-buffer)
     (kill-this-buffer))
   :config
-
+  (evil-set-leader 'normal (kbd "<SPC>"))
+  (evil-define-key 'normal 'global (kbd "<leader><SPC>") 'projectile-find-file)
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
   (with-eval-after-load 'evil-maps ; avoid conflict with company tooltip selection
     (define-key evil-insert-state-map (kbd "C-n") nil)
@@ -100,7 +102,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit rainbow-delimiters treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs ace-window which-key use-package undo-tree terraform-mode projectile evil doom-themes)))
+   '(elisp-slime-nav elist-slime-nav magit rainbow-delimiters treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs ace-window which-key use-package undo-tree terraform-mode projectile evil doom-themes)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -182,3 +184,7 @@
 
 (use-package magit
   :bind ("C-c m" . magit))
+
+
+(use-package elisp-slime-nav
+  :hook ielm-mode)
