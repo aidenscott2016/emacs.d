@@ -14,9 +14,8 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
-(setq use-package-always-defer t
-      use-package-always-ensure t)
+(eval-when-compile (require 'use-package))
+(setq use-package-always-ensure t)
 
 (use-package emacs
   :preface
@@ -64,6 +63,8 @@
     (kill-this-buffer))
   :config
   (evil-set-leader 'normal (kbd "<SPC>"))
+  (evil-define-key 'normal 'global (kbd "<leader><SPC>") 'projectile-find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-grep)
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
   (with-eval-after-load 'evil-maps ; avoid conflict with company tooltip selection
     (define-key evil-insert-state-map (kbd "C-n") nil)
@@ -101,13 +102,11 @@
 
 (use-package projectile
   :ensure t
-  :after evil
   :init
   (projectile-mode +1)
   :config
   (setq projectile-project-search-path '("~/src"))
-  (evil-define-key 'normal 'global (kbd "<leader><SPC>") 'projectile-find-file)
-  (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-grep)
+  (projectile-discover-projects-in-search-path)
   :bind ( :map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
@@ -140,7 +139,7 @@
 
 (use-package treemacs
   :ensure t
-  :defer t
+  ;:defer t
   :config
   (progn
     
@@ -170,7 +169,7 @@
   :ensure t)
 
 (use-package treemacs-projectile
-  :after (treemacs projectile)
+  :after (treemacs projectile which-key)
   :ensure t)
 
 (use-package treemacs-icons-dired
@@ -265,7 +264,7 @@
 (use-package company
   :hook (scala-mode . company-mode)
   :config
-  (setq lsp-completion-provider :capf))
+    (setq lsp-completion-provider :capf))
 
 ;; Use the Debug Adapter Protocol for running tests and debugging
 (use-package posframe
