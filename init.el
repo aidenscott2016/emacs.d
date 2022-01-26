@@ -4,7 +4,7 @@
 ;;; Code:
 (require 'package)
 
-;; Add melpa to your packages repositories
+;; u to your packages repositories
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
@@ -54,22 +54,25 @@
   :init
   (setq evil-want-C-u-scroll t
 	evil-want-keybinding nil
+	evil-want-integration t
 	evil-shift-width aiden/indent-width
 	)
-  :hook (after-init . evil-mode)
   :preface
-  (defun ian/save-and-kill-this-buffer ()
+  (defun aiden/save-and-kill-this-buffer ()
     (interactive)
     (save-buffer)
-    (kill-this-buffer))
+    (kill-this-buffer-and-window))
+  :hook (after-init . evil-mode)
   :config
   (evil-set-leader 'normal (kbd "<SPC>"))
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
+  (evil-define-key 'normal 'global (kbd "C-/") 'comment-dwim)
+  (evil-define-key 'normal 'global (kbd "<leader> c") 'compile)
   (with-eval-after-load 'evil-maps ; avoid conflict with company tooltip selection
     (define-key evil-insert-state-map (kbd "C-n") nil)
     (define-key evil-insert-state-map (kbd "C-p") nil))
-  (evil-ex-define-cmd "q" #'kill-this-buffer)
-  ;(evil-ex-define-cmd "wq" #'ian/save-and-kill-this-buffer))
+  ;; (evil-ex-define-cmd "q" #'kill-this-buffer-and-window)
+  ;;(evil-ex-define-cmd "wq" #'aiden/save-and-kill-this-buffer)
   )
 
 (use-package which-key
@@ -105,25 +108,25 @@
   :init
   (projectile-mode +1)
   :config
-  (setq projectile-project-search-path '("~/src"))
+  (setq projectile-project-search-path '("~/src/"))
   (evil-define-key 'normal 'global (kbd "<leader><SPC>") 'projectile-find-file)
-  (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-grep)
+  (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-ag)
   :bind ( :map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(company yasnippet lsp-ui lsp-metals lsp-mode flycheck sbt-mode scala-mode elisp-slime-nav elist-slime-nav magit rainbow-delimiters treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs ace-window which-key use-package undo-tree terraform-mode projectile evil doom-themes)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; (custom-set-variables
+;;  ;; custom-set-variables was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(package-selected-packages
+;;    '(evil-collection company yasnippet lsp-ui lsp-metals lsp-mode flycheck sbt-mode scala-mode elisp-slime-nav elist-slime-nav magit rainbow-delimiters treemacs-magit treemacs-icons-dired treemacs-projectile treemacs-evil treemacs ace-window which-key use-package undo-tree terraform-mode projectile evil doom-themes))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  )
 
 
 
@@ -139,26 +142,24 @@
          ("M-O" . ace-swap-window)))
 
 (use-package treemacs
-  :ensure t
   :defer t
+  :ensure t
   :config
-  (progn
-    
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode 'always)
 
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-      (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
+    ;; (pcase (cons (not (null (executable-find "git")))
+    ;;              (not (null treemacs-python-executable)))
+    ;;   (`(t . t)
+    ;;   (treemacs-git-mode 'deferred))
+    ;;   (`(t . _)
+    ;;    (treemacs-git-mode 'simple)))
 
-    (treemacs-hide-gitignored-files-mode nil))
+    ;; (treemacs-hide-gitignored-files-mode nil))
   :bind
   ( :map global-map
-        ("M-0"       . treemacs-select-window)
+        ("<leader> p p"       . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t t"   . treemacs)
         ("C-x t B"   . treemacs-bookmark)
@@ -166,8 +167,9 @@
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-evil
+  :ensure t
   :after (treemacs evil)
-  :ensure t)
+  )
 
 (use-package treemacs-projectile
   :after (treemacs projectile)
@@ -198,7 +200,8 @@
 
 
 (use-package magit
-  :bind ("C-c m" . magit))
+  :config (setq  magit-clone-default-directory "~/src/")
+  :bind ("<leader> g" . magit))
 
 
 (use-package elisp-slime-nav
@@ -277,7 +280,37 @@
   (lsp-mode . dap-ui-mode)
   )
 
+
+
+
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+(use-package ag
+  :config (setq ag-highlight-search t)
+  :hook (ag-mode . next-error-follow-minor-mode)
+  )
+
 (provide 'init)
+
+
 
 ;;; init.el ends here
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom. sp
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(evil-treemacs yasnippet which-key use-package undo-tree treemacs-projectile treemacs-icons-dired treemacs-evil terraform-mode sbt-mode rainbow-delimiters magit lsp-ui lsp-metals flycheck evil-collection elisp-slime-nav company)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
