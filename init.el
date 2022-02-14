@@ -4,8 +4,14 @@
 ;;; Code:
 (require 'package)
 
+(setq frame-title-format '(:eval (if buffer-file-name "%b %* %F" "%F aiden")))
 ;; Add melpa to your packages repositories
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+(setq frame-title-format "gwllo")
+(setq buffer-file-name "helloworld")
+
+
 
 (package-initialize)
 
@@ -65,6 +71,7 @@
   (evil-set-leader 'normal (kbd "<SPC>"))
   (evil-define-key 'normal 'global (kbd "<leader><SPC>") 'projectile-find-file)
   (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-grep)
+  (evil-define-key 'normal 'global (kbd "<leader>bb") 'ibuffer)
   (add-to-list 'evil-emacs-state-modes 'dired-mode)
   (with-eval-after-load 'evil-maps ; avoid conflict with company tooltip selection
     (define-key evil-insert-state-map (kbd "C-n") nil)
