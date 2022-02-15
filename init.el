@@ -12,12 +12,13 @@
 ;;          ("M-O" . ace-swap-window)))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom. sp
+ ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(evil-treemacs yasnippet which-key use-package undo-tree treemacs-projectile treemacs-icons-dired treemacs-evil terraform-mode sbt-mode rainbow-delimiters magit lsp-ui lsp-metals flycheck evil-collection elisp-slime-nav company)))
+ '(evil-undo-system 'undo-tree)
+  '(package-selected-packages
+     '(evil-treemacs yasnippet which-key use-package undo-tree treemacs-projectile treemacs-icons-dired treemacs-evil terraform-mode sbt-mode rainbow-delimiters magit lsp-ui lsp-metals flycheck evil-collection elisp-slime-nav company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -36,7 +37,7 @@
     (find-file "~/.emacs.d/init.el")))
 
 (defvar package-list
-  (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode)
+  (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode 'ido)
   )
 
 (defun as/install-package (package)
@@ -61,6 +62,8 @@
   evil-shift-width as/indent-width
   lisp-indent-offset 2
   help-window-select t
+  projectile-project-search-path '("~/src")
+  display-line-numbers 'relative
   )
 
 
@@ -77,17 +80,20 @@
 (menu-bar-mode -1)
 (show-paren-mode 1)
 (scroll-bar-mode -1)
+(projectile-mode +1)
+(display-line-numbers-mode +1)
 (load-theme 'wombat)
+(ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
 
 (evil-set-leader 'normal (kbd "SPC"))
-(evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file) 
-(evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs) 
-(evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-ag) 
-(evil-define-key 'normal 'global (kbd "<leader>fr") 'indent-region) 
-(evil-define-key 'nil 'global (kbd "C-SPC") 'completion-at-point) 
-(evil-define-key 'normal 'global (kbd "q") 'delete-window) 
-(evil-define-key 'normal 'global (kbd "<leader>b") 'ibuffer) 
+(evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
+(evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs)
+(evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-ag)
+(evil-define-key 'normal 'global (kbd "<leader>ir") 'indent-region)
+(evil-define-key 'nil 'global (kbd "C-SPC") 'completion-at-point)
+;;(evil-define-key 'normal 'global (kbd "q") 'delete-window)
+(evil-define-key 'normal 'global (kbd "<leader>b") 'projectile-ibuffer)
 
 
 
