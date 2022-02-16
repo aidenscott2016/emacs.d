@@ -1,3 +1,7 @@
+(defvar package-list
+  (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode 'ido
+    'rainbow-delimiters 'evil-collection 'magit)
+  )
 
 
 ;; (use-package ace-window
@@ -18,8 +22,7 @@
  ;; If there is more than one, they won't work right.
  '(evil-undo-system 'undo-tree)
   '(ledger-reports
-     '(("bal-Orange" "ledger bal Assets Liabilities")
-	("bal" "%(binary) -f %(ledger-file) bal")
+     '(("bal" "%(binary) -f %(ledger-file) bal Assets Liabilities")
 	("reg" "%(binary) -f %(ledger-file) reg")
 	("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
 	("account" "%(binary) -f %(ledger-file) reg %(account)")))
@@ -41,10 +44,6 @@
     (interactive)
     (find-file "~/.emacs.d/init.el")))
 
-(defvar package-list
-  (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode 'ido
-    'rainbow-delimiters)
-  )
 
 (defun as/install-package (package)
   (unless (package-installed-p package)
@@ -66,6 +65,8 @@
   auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
   evil-want-C-u-scroll t
   evil-shift-width as/indent-width
+  evil-collection-setup-minibuffer t
+  evil-want-keybinding nil
   lisp-indent-offset 2
   help-window-select t
   projectile-project-search-path '("~/src")
@@ -73,8 +74,9 @@
   )
 
 
-
 (require 'evil)
+(when (require 'evil-collection nil t)
+  (evil-collection-init))
 (require 'treemacs)
 (require 'treemacs-evil)
 (require 'undo-tree)
@@ -100,8 +102,9 @@
 (evil-define-key 'nil 'global (kbd "C-SPC") 'completion-at-point)
 ;;(evil-define-key 'normal 'global (kbd "q") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>b") 'projectile-ibuffer)
+(evil-define-key 'normal 'global (kbd "<leader>b") 'ibuffer)
 (evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs) 
-
+(evil-define-key 'normal 'global (kbd "<leader>gg") 'magit) 
 
 
 ;; undo tree
