@@ -17,8 +17,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-undo-system 'undo-tree)
-  '(package-selected-packages
-     '(evil-treemacs yasnippet which-key use-package undo-tree treemacs-projectile treemacs-icons-dired treemacs-evil terraform-mode sbt-mode rainbow-delimiters magit lsp-ui lsp-metals flycheck evil-collection elisp-slime-nav company)))
+  '(ledger-reports
+     '(("bal-Orange" "ledger bal Assets Liabilities")
+	("bal" "%(binary) -f %(ledger-file) bal")
+	("reg" "%(binary) -f %(ledger-file) reg")
+	("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+	("account" "%(binary) -f %(ledger-file) reg %(account)")))
+ '(package-selected-packages '(flycheck ledger-mode evil)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -37,7 +42,8 @@
     (find-file "~/.emacs.d/init.el")))
 
 (defvar package-list
-  (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode 'ido)
+  (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode 'ido
+    'rainbow-delimiters)
   )
 
 (defun as/install-package (package)
@@ -85,16 +91,16 @@
 (load-theme 'wombat)
 (ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (evil-set-leader 'normal (kbd "SPC"))
 (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
-(evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs)
 (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-ag)
 (evil-define-key 'normal 'global (kbd "<leader>ir") 'indent-region)
 (evil-define-key 'nil 'global (kbd "C-SPC") 'completion-at-point)
 ;;(evil-define-key 'normal 'global (kbd "q") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>b") 'projectile-ibuffer)
-
+(evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs) 
 
 
 
@@ -104,10 +110,8 @@
 ;; projectile
 ;; ace-windowq
 ;; kill window hotkey
-;; ido ?
 ;; which-key
 ;; treemacs-evil
 ;; treemacs-icons-dired
 ;; treemascs-projectile
 ;; rainbow-delimiters
-;; treemacs
