@@ -108,6 +108,7 @@
 (evil-define-key 'normal 'global (kbd "<leader>b") 'ibuffer)
 (evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs)
 (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
+(evil-define-key 'normal 'global (kbd "<leader>f") 'format-all-buffer)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
@@ -129,5 +130,4 @@
       (interactive)
       (ledger-report "bal" nil))
 
-    (evil-define-key 'normal 'global (kbd "<leader>f") 'ledger-mode-clean-buffer)
     (evil-define-key 'normal 'global (kbd "<leader>rb") 'bal-report)))
