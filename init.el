@@ -1,6 +1,6 @@
 (defvar package-list
   (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode 'ido
-    'rainbow-delimiters 'evil-collection 'magit)
+    'rainbow-delimiters 'evil-collection 'magit 'treemacs-projectile 'which-key 'format-all)
   )
 
 
@@ -16,23 +16,23 @@
 ;;          ("M-O" . ace-swap-window)))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-undo-system 'undo-tree)
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(evil-undo-system 'undo-tree)
   '(ledger-reports
-     '(("bal" "%(binary) -f %(ledger-file) bal Assets Liabilities")
+     '(("bal" "%(binary) -f %(ledger-file) -c bal Assets Liabilities")
 	("reg" "%(binary) -f %(ledger-file) reg")
 	("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
 	("account" "%(binary) -f %(ledger-file) reg %(account)")))
- '(package-selected-packages '(flycheck ledger-mode evil)))
+  '(package-selected-packages '(flycheck ledger-mode evil)))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ledger-font-xact-highlight-face ((t (:weight ultra-bold)))))
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(ledger-font-xact-highlight-face ((t (:weight ultra-bold)))))
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -69,7 +69,7 @@
   evil-want-keybinding nil
   lisp-indent-offset 2
   help-window-select t
-  projectile-project-search-path '("~/src")
+  projectile-project-search-path '("~/src" "~/ledger")
   display-line-numbers 'relative
   )
 
@@ -81,6 +81,7 @@
 (require 'treemacs-evil)
 (require 'undo-tree)
 (require 'terraform-mode)
+(which-key-mode)
 (global-undo-tree-mode)
 (global-evil-leader-mode)
 (evil-mode 1)
@@ -94,17 +95,20 @@
 (ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook 'format-all-mode)
+(add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
 
 (evil-set-leader 'normal (kbd "SPC"))
-(evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file)
+(evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file-dwim)
 (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-ag)
 (evil-define-key 'normal 'global (kbd "<leader>ir") 'indent-region)
 (evil-define-key 'nil 'global (kbd "C-SPC") 'completion-at-point)
 ;;(evil-define-key 'normal 'global (kbd "q") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>b") 'projectile-ibuffer)
 (evil-define-key 'normal 'global (kbd "<leader>b") 'ibuffer)
-(evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs) 
-(evil-define-key 'normal 'global (kbd "<leader>gg") 'magit) 
+(evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs)
+(evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
 ;; undo tree
@@ -118,3 +122,12 @@
 ;; treemacs-icons-dired
 ;; treemascs-projectile
 ;; rainbow-delimiters
+
+(add-hook 'ledger-mode-hook
+  (lambda ()
+    (defun bal-report ()
+      (interactive)
+      (ledger-report "bal" nil))
+
+    (evil-define-key 'normal 'global (kbd "<leader>f") 'ledger-mode-clean-buffer)
+    (evil-define-key 'normal 'global (kbd "<leader>rb") 'bal-report)))
