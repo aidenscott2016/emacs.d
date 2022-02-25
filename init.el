@@ -34,6 +34,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
   '(ledger-font-xact-highlight-face ((t (:weight ultra-bold)))))
+
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -44,7 +45,6 @@
   (lambda ()
     (interactive)
     (find-file "~/.emacs.d/init.el")))
-
 
 (defun as/install-package (package)
   (unless (package-installed-p package)
@@ -72,16 +72,19 @@
   help-window-select t
   projectile-project-search-path '("~/src" "~/ledger")
   display-line-numbers 'relative
+  display-line-numbers-type 'relative
   )
 
 
 (require 'evil)
 (when (require 'evil-collection nil t)
   (evil-collection-init))
+
 (require 'treemacs)
 (require 'treemacs-evil)
 (require 'undo-tree)
 (require 'terraform-mode)
+(require 'display-line-numbers)
 (which-key-mode)
 (global-undo-tree-mode)
 (global-evil-leader-mode)
@@ -91,12 +94,13 @@
 (show-paren-mode 1)
 (scroll-bar-mode -1)
 (projectile-mode +1)
-(display-line-numbers-mode +1)
 (load-theme 'wombat)
 (ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook 'format-all-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+					;(add-hook 'prog-mode-hook (lambda () (line-number-mode +1)))
 (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
 
 (evil-set-leader 'normal (kbd "SPC"))
@@ -125,3 +129,11 @@
       (ledger-report "bal" nil))
 
     (evil-define-key 'normal 'global (kbd "<leader>rb") 'bal-report)))
+(evil-define-key 'normal 'global (kbd "<leader>cc") 'projectile-compile-project)
+
+(ignore-errors
+  (require 'ansi-color)
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
