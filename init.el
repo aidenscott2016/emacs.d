@@ -1,6 +1,7 @@
-(defvar package-list
-  (list 'flycheck 'evil 'ledger-mode 'treemacs 'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree 'terraform-mode 'ido
-    'rainbow-delimiters 'evil-collection 'magit 'treemacs-projectile 'which-key 'format-all)
+(defvar package-list (list 'flycheck 'evil 'ledger-mode 'treemacs
+		       'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree
+		       'terraform-mode 'ido
+		       'rainbow-delimiters 'evil-collection 'magit 'treemacs-projectile 'which-key 'format-all)
   )
 
 
@@ -105,24 +106,17 @@
 (evil-define-key 'nil 'global (kbd "C-SPC") 'completion-at-point)
 ;;(evil-define-key 'normal 'global (kbd "q") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>b") 'projectile-ibuffer)
-(evil-define-key 'normal 'global (kbd "<leader>b") 'ibuffer)
+(evil-define-key 'normal 'global (kbd "<leader>ib") 'ibuffer)
 (evil-define-key 'normal 'global (kbd "<leader>p") 'treemacs)
 (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
 (evil-define-key 'normal 'global (kbd "<leader>f") 'format-all-buffer)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
-;; undo tree
 ;; linum
-;; terraform
-;; projectile
 ;; ace-windowq
 ;; kill window hotkey
-;; which-key
-;; treemacs-evil
 ;; treemacs-icons-dired
-;; treemascs-projectile
-;; rainbow-delimiters
 
 (add-hook 'ledger-mode-hook
   (lambda ()
