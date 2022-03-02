@@ -174,12 +174,9 @@
 (load-theme 'wombat)
 (ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
-(add-to-list 'auto-mode-alist '("\\.scm\\'" . geiser-mode))
-(add-to-list 'auto-mode-alist '("\\.scm\\'" . scheme-mode))
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook 'format-all-mode)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-					;(add-hook 'prog-mode-hook (lambda () (line-number-mode +1)))
 (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
 
 (evil-set-leader 'normal (kbd "SPC"))
