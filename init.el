@@ -1,7 +1,7 @@
 (defvar package-list (list 'flycheck 'evil 'ledger-mode 'treemacs
 		       'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree
 		       'terraform-mode 'ido
-		       'rainbow-delimiters 'evil-collection 'magit 'treemacs-projectile 'which-key 'format-all 'geiser-mit)
+		       'rainbow-delimiters 'evil-collection 'magit 'treemacs-projectile 'which-key 'format-all 'geiser-mit 'hydra)
   )
 
 
@@ -214,3 +214,6 @@
     (when (eq major-mode 'compilation-mode)
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
+
+
+(load "/home/aiden/.emacs.d/metals.el")
