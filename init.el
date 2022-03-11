@@ -1,7 +1,9 @@
 (defvar package-list (list 'flycheck 'evil 'ledger-mode 'treemacs
 		       'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree
 		       'terraform-mode 'ido
-		       'rainbow-delimiters 'evil-collection 'magit 'treemacs-projectile 'which-key 'format-all 'geiser-mit 'hydra)
+		       'rainbow-delimiters 'evil-collection 'magit
+		       'treemacs-projectile 'which-key 'format-all
+		       'geiser-mit 'hydra 'paredit)
   )
 
 
