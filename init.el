@@ -1,10 +1,10 @@
 (defvar package-list (list 'flycheck 'evil 'ledger-mode 'treemacs
-		       'evil-leader 'treemacs 'treemacs-evil 'projectile 'undo-tree
-		       'terraform-mode 'ido
-		       'rainbow-delimiters 'evil-collection 'magit
-		       'treemacs-projectile 'which-key 'format-all
-		       'geiser-mit 'hydra 'paredit)
-  )
+		       'evil-leader 'treemacs 'treemacs-evil
+		       'projectile 'undo-tree 'terraform-mode
+		       'ido 'rainbow-delimiters 'evil-collection
+		       'magit 'treemacs-projectile 'which-key
+		       'format-all 'geiser-mit 'hydra 'paredit
+		       'org-autolist 'ox-jira 'restclient 'tide) )
 
 
 ;; (use-package ace-window
@@ -23,6 +23,9 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+  '(ansi-color-names-vector
+     ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+  '(custom-enabled-themes '(adwaita))
   '(evil-undo-system 'undo-tree)
   '(format-all-default-formatters
      '(("Assembly" asmfmt)
@@ -105,7 +108,8 @@
 	("reg" "%(binary) -f %(ledger-file) reg")
 	("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
 	("account" "%(binary) -f %(ledger-file) reg %(account)")))
-  '(package-selected-packages '(flycheck ledger-mode evil)))
+  '(package-selected-packages '(restclient ox-jira flycheck ledger-mode evil))
+  '(projectile-project-search-path '("~/src" "~/crap" "~/ledger")))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -148,7 +152,6 @@
   evil-want-keybinding nil
   lisp-indent-offset 2
   help-window-select t
-  projectile-project-search-path '("~/src" "~/ledger")
   display-line-numbers 'relative
   display-line-numbers-type 'relative
   geiser-active-implementations '(mit)
@@ -164,16 +167,21 @@
 (require 'undo-tree)
 (require 'terraform-mode)
 (require 'display-line-numbers)
+(require 'treemacs-projectile)
+(require 'ox-jira)
 (which-key-mode)
 (global-undo-tree-mode)
 (global-evil-leader-mode)
+(global-display-line-numbers-mode)
 (evil-mode 1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
 (scroll-bar-mode -1)
 (projectile-mode +1)
-(load-theme 'wombat)
+(global-company-mode +1)
+
+					;(load-theme 'wombat)
 (ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
@@ -219,3 +227,24 @@
 
 
 (load "/home/aiden/.emacs.d/metals.el")
+
+(add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
+
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
