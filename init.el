@@ -1,10 +1,11 @@
+(require 'package)
 (defvar package-list (list 'flycheck 'evil 'ledger-mode 'treemacs
 		       'evil-leader 'treemacs 'treemacs-evil
 		       'projectile 'undo-tree 'terraform-mode
 		       'ido 'rainbow-delimiters 'evil-collection
 		       'magit 'treemacs-projectile 'which-key
 		       'format-all 'geiser-mit 'hydra 'paredit
-		       'org-autolist 'ox-jira 'restclient 'tide) )
+		       'org-autolist 'ox-jira 'restclient 'tide 'ace-window) )
 
 
 ;; (use-package ace-window
@@ -122,7 +123,6 @@
   '(ledger-font-xact-highlight-face ((t (:weight ultra-bold))))
   '(terraform--resource-name-face ((t (:foreground "dark orange" :weight semi-bold)))))
 
-(require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
@@ -200,7 +200,7 @@
 (evil-define-key 'normal 'global (kbd "<leader>SPC") 'projectile-find-file-dwim)
 (evil-define-key 'normal 'global (kbd "<leader>sp") 'projectile-ag)
 (evil-define-key 'normal 'global (kbd "<leader>ir") 'indent-region)
-(evil-define-key 'nil 'global (kbd "C-SPC") 'completion-at-point)
+(evil-define-key 'nil 'global (kbd "C-SPC") 'company-complete)
 ;;(evil-define-key 'normal 'global (kbd "q") 'delete-window)
 (evil-define-key 'normal 'global (kbd "<leader>b") 'projectile-ibuffer)
 (evil-define-key 'normal 'global (kbd "<leader>ib") 'ibuffer)
@@ -209,6 +209,8 @@
 (evil-define-key 'normal 'global (kbd "<leader>f") 'format-all-buffer)
 (evil-define-key 'normal 'global (kbd "<leader>xb") 'eval-buffer)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(evil-define-key 'normal 'global (kbd "<leader>w") 'ace-window)
+(evil-define-key 'normal 'global (kbd "<leader>q") 'ace-delete-window)
 
 
 ;; linum
