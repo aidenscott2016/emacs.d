@@ -23,9 +23,13 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+  '(ansi-color-faces-vector
+     [default default default italic underline success warning error])
   '(ansi-color-names-vector
      ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
   '(custom-enabled-themes '(adwaita))
+  '(evil-goto-definition-functions
+     '(evil-goto-definition-imenu evil-goto-definition-semantic evil-goto-definition-xref evil-goto-definition-search tide-jump-to-definition))
   '(evil-undo-system 'undo-tree)
   '(format-all-default-formatters
      '(("Assembly" asmfmt)
@@ -108,14 +112,15 @@
 	("reg" "%(binary) -f %(ledger-file) reg")
 	("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
 	("account" "%(binary) -f %(ledger-file) reg %(account)")))
-  '(package-selected-packages '(restclient ox-jira flycheck ledger-mode evil))
+  '(package-selected-packages '(htmlize restclient ox-jira flycheck ledger-mode evil))
   '(projectile-project-search-path '("~/src" "~/crap" "~/ledger")))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-  '(ledger-font-xact-highlight-face ((t (:weight ultra-bold)))))
+  '(ledger-font-xact-highlight-face ((t (:weight ultra-bold))))
+  '(terraform--resource-name-face ((t (:foreground "dark orange" :weight semi-bold)))))
 
 (require 'package)
 
@@ -169,6 +174,8 @@
 (require 'display-line-numbers)
 (require 'treemacs-projectile)
 (require 'ox-jira)
+(require 'typescript-mode)
+(require 'tide)
 (which-key-mode)
 (global-undo-tree-mode)
 (global-evil-leader-mode)
@@ -248,3 +255,7 @@
 
 ;; formats the buffer before saving
 (add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(provide 'init)
