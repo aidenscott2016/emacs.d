@@ -108,6 +108,7 @@
 	("_Nginx" nginxfmt)
 	("_Snakemake" snakefmt)
 	("Scheme" emacs-lisp)))
+  '(format-all-show-errors 'never)
   '(ledger-reports
      '(("bal" "%(binary) -f %(ledger-file) -c bal Assets Liabilities")
 	("reg" "%(binary) -f %(ledger-file) reg")
@@ -211,6 +212,7 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (evil-define-key 'normal 'global (kbd "<leader>w") 'ace-window)
 (evil-define-key 'normal 'global (kbd "<leader>q") 'ace-delete-window)
+(define-key projectile-mode-map (kbd "C-x d") 'dired-at-point)
 
 
 ;; linum
