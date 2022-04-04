@@ -5,7 +5,8 @@
 		       'ido 'rainbow-delimiters 'evil-collection
 		       'magit 'treemacs-projectile 'which-key
 		       'format-all 'geiser-mit 'hydra 'paredit
-		       'org-autolist 'ox-jira 'restclient 'tide 'ace-window) )
+		       'org-autolist 'ox-jira 'restclient 'tide
+		       'ace-window 'yaml-mode ) )
 
 
 ;; (use-package ace-window
@@ -32,6 +33,7 @@
   '(evil-goto-definition-functions
      '(evil-goto-definition-imenu evil-goto-definition-semantic evil-goto-definition-xref evil-goto-definition-search tide-jump-to-definition))
   '(evil-undo-system 'undo-tree)
+  '(format-all-debug nil)
   '(format-all-default-formatters
      '(("Assembly" asmfmt)
 	("ATS" atsfmt)
@@ -114,7 +116,10 @@
 	("reg" "%(binary) -f %(ledger-file) reg")
 	("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
 	("account" "%(binary) -f %(ledger-file) reg %(account)")))
-  '(package-selected-packages '(htmlize restclient ox-jira flycheck ledger-mode evil))
+  '(package-selected-packages
+     '(yaml-mode htmlize restclient ox-jira flycheck ledger-mode evil))
+  '(projectile-globally-ignored-directories
+     '(".bloop" ".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd"))
   '(projectile-project-search-path '("~/src" "~/crap" "~/ledger")))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -192,6 +197,7 @@
 					;(load-theme 'wombat)
 (ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook 'format-all-mode)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -212,6 +218,7 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (evil-define-key 'normal 'global (kbd "<leader>w") 'ace-window)
 (evil-define-key 'normal 'global (kbd "<leader>q") 'ace-delete-window)
+(evil-define-key 'normal 'global (kbd "gd") 'evil-jump-to-tag)
 (define-key projectile-mode-map (kbd "C-x d") 'dired-at-point)
 
 
@@ -219,15 +226,20 @@
 ;; ace-windowq
 ;; kill window hotkey
 ;; treemacs-icons-dired
+(add-hook 'lsp-mode-hook
+  (evil-define-key 'normal 'global (kbd "<leader>f") 'lsp-format-buffer)
+  )
+
 
 (add-hook 'ledger-mode-hook
   (lambda ()
-    (defun bal-report ()
+    (defun bal-report ()q
       (interactive)
       (ledger-report "bal" nil))
 
     (evil-define-key 'normal 'global (kbd "<leader>rb") 'bal-report)))
 (evil-define-key 'normal 'global (kbd "<leader>cc") 'projectile-compile-project)
+
 
 (ignore-errors
   (require 'ansi-color)
