@@ -21,19 +21,20 @@
 ;;          ("M-O" . ace-swap-window)))
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
   '(ansi-color-faces-vector
      [default default default italic underline success warning error])
   '(ansi-color-names-vector
      ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
-  '(custom-enabled-themes '(adwaita))
+ '(custom-enabled-themes '(adwaita))
+ '(dired-recursive-deletes 'top)
   '(evil-goto-definition-functions
      '(evil-goto-definition-imenu evil-goto-definition-semantic evil-goto-definition-xref evil-goto-definition-search tide-jump-to-definition))
-  '(evil-undo-system 'undo-tree)
-  '(format-all-debug nil)
+ '(evil-undo-system 'undo-tree)
+ '(format-all-debug nil)
   '(format-all-default-formatters
      '(("Assembly" asmfmt)
 	("ATS" atsfmt)
@@ -110,7 +111,7 @@
 	("_Nginx" nginxfmt)
 	("_Snakemake" snakefmt)
 	("Scheme" emacs-lisp)))
-  '(format-all-show-errors 'never)
+ '(format-all-show-errors 'never)
   '(ledger-reports
      '(("bal" "%(binary) -f %(ledger-file) -c bal Assets Liabilities")
 	("reg" "%(binary) -f %(ledger-file) reg")
@@ -120,14 +121,14 @@
      '(yaml-mode htmlize restclient ox-jira flycheck ledger-mode evil))
   '(projectile-globally-ignored-directories
      '(".bloop" ".idea" ".vscode" ".ensime_cache" ".eunit" ".git" ".hg" ".fslckout" "_FOSSIL_" ".bzr" "_darcs" ".tox" ".svn" ".stack-work" ".ccls-cache" ".cache" ".clangd"))
-  '(projectile-project-search-path '("~/src" "~/crap" "~/ledger")))
+ '(projectile-project-search-path '("~/src" "~/crap" "~/ledger")))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(ledger-font-xact-highlight-face ((t (:weight ultra-bold))))
-  '(terraform--resource-name-face ((t (:foreground "dark orange" :weight semi-bold)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ledger-font-xact-highlight-face ((t (:weight ultra-bold))))
+ '(terraform--resource-name-face ((t (:foreground "dark orange" :weight semi-bold)))))
 
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -193,13 +194,14 @@
 (scroll-bar-mode -1)
 (projectile-mode +1)
 (global-company-mode +1)
+(visual-line-mode +1)
 
 					;(load-theme 'wombat)
 (ido-mode +1)
 (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'prog-mode-hook 'format-all-mode)
+;; (add-hook 'prog-mode-hook 'format-all-mode)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
 
@@ -228,12 +230,13 @@
 ;; treemacs-icons-dired
 (add-hook 'lsp-mode-hook
   (evil-define-key 'normal 'global (kbd "<leader>f") 'lsp-format-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>rr") 'lsp-rename )
   )
 
 
 (add-hook 'ledger-mode-hook
   (lambda ()
-    (defun bal-report ()q
+    (defun bal-report ()
       (interactive)
       (ledger-report "bal" nil))
 
