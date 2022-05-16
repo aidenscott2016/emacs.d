@@ -6,7 +6,7 @@
 		       'magit 'treemacs-projectile 'which-key
 		       'format-all 'geiser-mit 'hydra 'paredit
 		       'org-autolist 'ox-jira 'restclient 'tide
-		       'ace-window 'yaml-mode ) )
+		       'ace-window 'yaml-mode 'company ) )
 
 
 ;; (use-package ace-window
@@ -259,6 +259,7 @@
 
 (defun setup-tide-mode ()
   (interactive)
+  (require 'company-tide)
   (tide-setup)
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
@@ -273,7 +274,6 @@
 (setq company-tooltip-align-annotations t)
 
 ;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 
