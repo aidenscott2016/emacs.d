@@ -211,7 +211,6 @@
 
 (use-package ledger-mode)
 
-
 (setq auto-save-file-name-transforms
       `((".*" ,(concat user-emacs-directory "auto-save/") t)))
 
@@ -227,7 +226,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ledger-mode format-all magit ivy-prescient which-key use-package rainbow-delimiters nix-mode ivy-rich hydra helpful general evil-collection doom-themes doom-modeline counsel-projectile command-log-mode all-the-icons))
+   '(company ledger-mode format-all magit ivy-prescient which-key use-package rainbow-delimiters nix-mode ivy-rich hydra helpful general evil-collection doom-themes doom-modeline counsel-projectile command-log-mode all-the-icons))
  '(prescient-filter-method '(literal regexp initialism fuzzy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -235,3 +234,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(use-package company
+  :bind (:map company-active-map
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous))
+  :config
+  (setq company-idle-delay 0.3)
+  (global-company-mode t))
