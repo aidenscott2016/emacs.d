@@ -164,7 +164,7 @@
   :after evil
   :ensure t
   :custom (evil-collection-setup-minibuffer t)
-  :init (evil-collection-init))
+  :init (evil-collection-init '(corfu-mode magit)))
 
 (use-package corfu
   :before evil
