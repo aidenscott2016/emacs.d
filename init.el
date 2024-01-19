@@ -1,4 +1,3 @@
-
 ;; Initialize package sources
 (require 'package)
 
@@ -16,9 +15,6 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
-
-
-
 (use-package emacs
   :init
 
@@ -45,10 +41,7 @@
 
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode t)
-  (column-number-mode)
-
-  )
-
+  (column-number-mode))
 
 (use-package evil-collection
   :after evil
