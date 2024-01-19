@@ -202,7 +202,10 @@
   (format-all-mode . format-all-ensure-formatter)
   :general (rune/leader-keys "f" 'format-all-buffer)
   :config
-  (setq-default format-all-formatters '(("Nix" nixpkgs-fmt))))
+  (setq-default format-all-formatters '(("Nix" nixpkgs-fmt)
+					("YAML" prettier)
+					)))
+(use-package yaml-mode)
 
 (use-package ledger-mode)
 
@@ -221,7 +224,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company ledger-mode format-all magit ivy-prescient which-key use-package rainbow-delimiters nix-mode ivy-rich hydra helpful general evil-collection doom-themes doom-modeline counsel-projectile command-log-mode all-the-icons))
+   '(yaml-mode company ledger-mode format-all magit ivy-prescient which-key use-package rainbow-delimiters nix-mode ivy-rich hydra helpful general evil-collection doom-themes doom-modeline counsel-projectile command-log-mode all-the-icons))
  '(prescient-filter-method '(literal regexp initialism fuzzy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -229,10 +232,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(use-package company
-  :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous))
-  :config
-  (setq company-idle-delay 0.3)
-  (global-company-mode t))
+(setq ediff-diff-options "")
+(setq ediff-custom-diff-options "-u")
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq ediff-split-window-function 'split-window-vertically)
