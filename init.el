@@ -50,6 +50,11 @@
   )
 
 
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :custom (evil-collection-setup-minibuffer t)
+  :init (evil-collection-init))
 
 
 (use-package command-log-mode)
@@ -168,13 +173,8 @@
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
 
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
 
 (use-package hydra)
-
 (defhydra hydra-text-scale (:timeout 4)
   "scale text"
   ("j" text-scale-increase "in")
@@ -187,6 +187,7 @@
 
 
 (use-package magit
+  :after evil-collection
   :commands magit-status
   :general (rune/leader-keys "gg" 'magit-status)
   :custom
@@ -212,10 +213,6 @@
   :general (rune/leader-keys "SPC" 'counsel-projectile)
   :config (counsel-projectile-mode))
 
-(use-package magit
-  :commands magit-status
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 
 (use-package format-all
