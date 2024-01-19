@@ -1,15 +1,3 @@
-(tool-bar-mode -1)          ; Disable the toolbar
-(scroll-bar-mode -1)        ; Disable visible scrollbar
-(tooltip-mode -1)           ; Disable tooltips
-(set-fringe-mode 10)        ; Give some breathing room
-
-
-;; Set up the visible bell
-(setq visible-bell t)
-
-
-;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; Initialize package sources
 (require 'package)
@@ -18,7 +6,6 @@
 			 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
-
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
@@ -30,9 +17,40 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(column-number-mode)
-(global-display-line-numbers-mode t)
-(setq display-line-numbers 'relative)
+
+
+(use-package emacs
+  :init
+
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)          ; Disable the toolbar
+  (scroll-bar-mode -1)        ; Disable visible scrollbar
+  (tooltip-mode -1)           ; Disable tooltips
+  (set-fringe-mode 10)        ; Give some breathing room
+  (setq visible-bell t)
+  ;; Make ESC quit prompts
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+  (setq auto-save-file-name-transforms
+	`((".*" ,(concat user-emacs-directory "auto-save/") t)))
+
+  (setq backup-directory-alist
+	`(("." . ,(expand-file-name
+                   (concat user-emacs-directory "backups")))))
+
+  (setq ediff-diff-options "")
+  (setq ediff-custom-diff-options "-u")
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-vertically)
+
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode t)
+  (column-number-mode)
+
+  )
+
+
+
 
 (use-package command-log-mode)
 
@@ -209,13 +227,6 @@
 
 (use-package ledger-mode)
 
-(setq auto-save-file-name-transforms
-      `((".*" ,(concat user-emacs-directory "auto-save/") t)))
-
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name
-                 (concat user-emacs-directory "backups")))))
-
 
 
 (custom-set-variables
@@ -232,7 +243,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(setq ediff-diff-options "")
-(setq ediff-custom-diff-options "-u")
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-(setq ediff-split-window-function 'split-window-vertically)
