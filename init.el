@@ -140,7 +140,7 @@
     "ee" '( (lambda ()
 	      (interactive)
 	      (find-file "~/.config/emacs/init.el"))
-	    :which-key "yolo")
+	    :which-key "edit init.el")
     "b" '(ivy-switch-buffer :which-key "switch buffer")
     "t"  '(:ignore t :which-key "toggles")
 
@@ -153,6 +153,10 @@
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
+
+  :bind (:map evil-window-map
+	      ("s" . (lambda () (interactive) (evil-window-split) (other-window 1)))
+	      ("v" . (lambda () (interactive) (evil-window-vsplit) (other-window 1))))
   :config
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
