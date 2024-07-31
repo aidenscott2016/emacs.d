@@ -3,3 +3,7 @@
 /projectile-bookmarks.eld
 /transient/
 /projectile.cache
+/.cache/
+/init.el.bak
+/projects
+/url/
