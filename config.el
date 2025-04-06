@@ -43,6 +43,40 @@
 (setq org-directory "~/org/")
 
 
+(after! lsp-mode                        ;
+  (lsp-register-client
+   (make-lsp-client :new-connection (lsp-stdio-connection "nixd")
+                    :major-modes '(nix-mode)
+                    :priority 0
+                    :server-id 'nixd))
+
+  (setq lsp-nix-nixd-server-path "nixd"
+        lsp-nix-nixd-formatting-command [ "nixfmt" ]
+        lsp-nix-nixd-nixpkgs-expr "import <nixpkgs> { }"
+        ;; lsp-nix-nixd-home-manager-options-expr (concat "(builtins.getFlake \"" (getenv "HOME") "/dotfiles\").homeConfigurations.\"lukaszczaplinski@LsFramework\".options")
+        lsp-nix-nixd-nixos-options-expr (concat "(builtins.getFlake \"" (getenv "HOME") "/src/nixos\").nixosConfigurations.locutus.options")))
+(add-hook 'nix-mode-hook #'lsp!)
+
+(use-package lsp-mode
+  :ensure t
+  :custom
+  (lsp-auto-execute-action nil))
+
+(use-package lsp-nix
+  :ensure lsp-mode
+  :after (lsp-mode)
+  :demand t
+  :custom
+  (lsp-nix-nil-formatter ["nixfmt"]))
+
+(use-package nix-mode
+  :hook (nix-mode . lsp-deferred)
+  :ensure t
+  :init (set-file-template! "/modules.*nix$"
+          :trigger "nm"
+          :mode 'nix-mode)
+  )
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -65,6 +99,10 @@
 ;;   this file. Emacs searches the `load-path' when you load packages with
 ;;   `require' or `use-package'.
 ;; - `map!' for binding new keys
+;;
+
+;; prevent doom removing projects from treemacs workspace
+(map! [remap +treemacs/toggle] #'treemacs)
 ;;
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
